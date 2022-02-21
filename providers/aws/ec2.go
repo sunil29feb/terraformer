@@ -46,7 +46,6 @@ func (g *Ec2Generator) InitResources() error {
 		}
 	
 		if strings.HasPrefix(filter.FieldPath, "vpc") && filter.IsApplicable("instance") {
-		    fmt.Println("inside")
 			filters = append(filters, types.Filter{
 				Name:   aws.String("vpc-id"),
 				Values: filter.AcceptableValues,
