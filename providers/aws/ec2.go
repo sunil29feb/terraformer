@@ -17,7 +17,6 @@ package aws
 import (
 	"context"
 	"strings"
-
 	"github.com/GoogleCloudPlatform/terraformer/terraformutils"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
@@ -42,6 +41,14 @@ func (g *Ec2Generator) InitResources() error {
 		if strings.HasPrefix(filter.FieldPath, "tags.") && filter.IsApplicable("instance") {
 			filters = append(filters, types.Filter{
 				Name:   aws.String("tag:" + strings.TrimPrefix(filter.FieldPath, "tags.")),
+				Values: filter.AcceptableValues,
+			})
+		}
+	
+		if strings.HasPrefix(filter.FieldPath, "vpc") && filter.IsApplicable("instance") {
+		    fmt.Println("inside")
+			filters = append(filters, types.Filter{
+				Name:   aws.String("vpc-id"),
 				Values: filter.AcceptableValues,
 			})
 		}
